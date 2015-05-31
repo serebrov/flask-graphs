@@ -13,12 +13,12 @@ Run an app:
 python application.py
 ```
 
-Open API app: http://localhost:5000/static/index.html.
+Open API app: [http://localhost:5000/static/index.html](http://localhost:5000/static/index.html).
 Or access API directly:
 
-- data - http://localhost:5000/data
-- count - http://localhost:5000/data/count
-- heatmap - http://localhost:5000/data/heatmap
+- data - [http://localhost:5000/data](http://localhost:5000/data)
+- count - [http://localhost:5000/data/count](http://localhost:5000/data/count)
+- heatmap - [http://localhost:5000/data/heatmap](http://localhost:5000/data/heatmap)
 
 When application is started it generates 10000 test data records.
 Under the hood it uses super-simple in-memory database to store data, so if you re-start an app the data is lost.
@@ -42,9 +42,9 @@ Sample data describes a game where we have some stats about players:
 - position - current x/y player's position
 - ts - current timestamp
 
-Frontend is a pure html / js application. It queries data via API and then shows a d3 line chart (based on http://bl.ocks.org/mbostock/3883245 example) and a c3-based line chart.
+Frontend is a pure html / js application. It queries data via API and then shows a d3 line chart (based on [this](http://bl.ocks.org/mbostock/3883245) example) and a c3-based line chart.
 
-Also frontend shows heatmaps of visit count for each X,Y coordinate for each floor. Based on this example: http://bl.ocks.org/tjdecke/5558084.
+Also frontend shows heatmaps of visit count for each X,Y coordinate for each floor. Based on [this example](http://bl.ocks.org/tjdecke/5558084).
 If you hover a heatmap cell the tooltip will show X,Y and count of visits.
 
 The frontend page looks like this:
