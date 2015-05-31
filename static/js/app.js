@@ -1,16 +1,3 @@
-function loadData() {
-  //d3.json('http://localhost:5000/data', showData);
-}
-
-function showData(data) {
-  d3.select('body').selectAll('div.data-holder')
-    .data(data['data'])
-    .enter()
-    .append('p').text(function(item) {
-      return 'Item: ' + JSON.stringify(item);
-    });
-}
-
 function showSvgLineChart() {
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 650 - margin.left - margin.right,
