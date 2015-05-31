@@ -1,12 +1,15 @@
 from functools import wraps
 import simplejson as json
 import traceback
+import datetime
+from collections import defaultdict
 
 from flask import Flask
 from flask import jsonify
 from flask import request
 
 import database
+import generator
 
 app = Flask(__name__)
 app.debug = True
@@ -57,15 +60,17 @@ def get_data():
     return jsonify({'data': result})
 
 
+@app.route("/data/count", methods=["GET"])
+@print_exceptions
+def get_data_count():
+    data = database.find_if(lambda item: True)
+    result = defaultdict(int)
+    for item in data:
+        ts_datetime = datetime.datetime.utcfromtimestamp(item['ts'])
+        result[str(ts_datetime.date())] += 1
+    return jsonify({'data': result})
+
+
 if __name__ == '__main__':
-    player1 = {
-        'player': 'Nick', 'floor': 'Ground',
-        'position': {'x': 0, 'y': 0}, 'ts': 100
-    }
-    player2 = {
-        'player': 'Ken', 'floor': 'TowerTop',
-        'position': {'x': 100, 'y': 50}, 'ts': 200
-    }
-    database.put(player1)
-    database.put(player2)
+    generator.generate(local=True)
     app.run()
