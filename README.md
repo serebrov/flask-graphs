@@ -35,3 +35,18 @@ curl -H "Content-Type: application/json" --data '[{
     "ts": 1420070450
 }]' http://localhost:5000/data
 ```
+
+Sample data describes a game where we have some stats about players:
+- player - player name
+- floor - the floor player is on now (Underground, Ground, etc)
+- position - current x/y player's position
+- ts - current timestamp
+
+Frontend is a pure html / js application. It queries data via API and then shows a d3 line chart (based on http://bl.ocks.org/mbostock/3883245 example) and a c3-based line chart.
+
+Also frontend shows heatmaps of visit count for each X,Y coordinate for each floor. Based on this example: http://bl.ocks.org/tjdecke/5558084.
+If you hover a heatmap cell the tooltip will show X,Y and count of visits.
+
+The frontend page looks like this:
+
+![screenshot](image/screen.png)
