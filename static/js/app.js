@@ -7,7 +7,6 @@ function showData(data) {
     .data(data['data'])
     .enter()
     .append('p').text(function(item) {
-      console.log(item);
       return 'Item: ' + JSON.stringify(item);
     });
 }
@@ -36,14 +35,12 @@ function showSvgLineChart() {
   d3.json('http://localhost:5000/data/count', function(error, result) {
     result = result['data'];
     data = [];
-    console.log(result)
     for (date in result) {
       data.push({
         'date': parseDate(date),
         'count': result[date]
       });
     }
-    console.log(data)
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain(d3.extent(data, function(d) { return d.count; }));
@@ -70,6 +67,34 @@ function showSvgLineChart() {
   });
 }
 
+function showC3LineChart() {
+  d3.json('http://localhost:5000/data/count', function(error, result) {
+    result = result['data'];
+    dates = ['dates'];
+    counts = ['counts'];
+    for (date in result) {
+      dates.push(date);
+      counts.push(result[date]);
+    }
+    var chart = c3.generate({
+        bindto: '.c3-line-chart-holder',
+        data: {
+          x: 'dates',
+          columns: [ dates, counts ]
+        },
+        axis: {
+            x: {
+                type: 'timeseries',
+                tick: {
+                    format: '%Y-%m-%d'
+                }
+            }
+        }
+    });
+  });
+}
+
 $(document).ready(function() {
   showSvgLineChart();
+  showC3LineChart();
 });
