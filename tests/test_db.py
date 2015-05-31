@@ -1,5 +1,5 @@
 import unittest
-import time
+import simplejson as json
 
 import os
 import sys
@@ -59,6 +59,17 @@ class DBTest(unittest.TestCase):
     def test_query(self):
         result = database.query(player='Nick')
         self.assertEquals({'Nick|100': self.player1}, result)
+
+    def test_post(self):
+        database.reset()
+        self.assertEquals({}, database.data)
+        self.app.post('/data', data=json.dumps([self.player1]))
+        self.assertEquals({'Nick|100': self.player1}, database.data)
+        self.app.post('/data', data=json.dumps([self.player2]))
+        self.assertEquals({
+            'Nick|100': self.player1,
+            'Ken|200': self.player2
+        }, database.data)
 
 
 if __name__ == "__main__":

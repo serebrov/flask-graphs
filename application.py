@@ -25,7 +25,6 @@ def print_exceptions(fn):
             print traceback.format_exc()
             print request.url
             print request.data
-            print request.form
             print '------'
             raise
     return wrapped
@@ -42,19 +41,31 @@ def post_data():
     data = json.loads(request.data)
     for item in data:
         database.put(item)
+    return jsonify({'result': 'OK'})
 
 
 @app.route("/data", methods=["GET"])
 @print_exceptions
-def get_data(**kwargs):
-    start = kwargs['start'] if 'start' in kwargs else None
-    end = kwargs['end'] if 'end' in kwargs else None
-    database.find_if(
+def get_data():
+    start = request.args.get('start', None)
+    end = request.args.get('end', None)
+    result = database.find_if(
         lambda item:
-            (not start or (start and item['ts'] >= start)) and
-            (not end or (end and item['ts'] <= end))
+            (not start or (start and item['ts'] >= int(start))) and
+            (not end or (end and item['ts'] <= int(end)))
     )
+    return jsonify(result)
 
 
 if __name__ == '__main__':
+    player1 = {
+        'player': 'Nick', 'floor': 'Ground',
+        'position': {'x': 0, 'y': 0}, 'ts': 100
+    }
+    player2 = {
+        'player': 'Ken', 'floor': 'TowerTop',
+        'position': {'x': 100, 'y': 50}, 'ts': 200
+    }
+    database.put(player1)
+    database.put(player2)
     app.run()
