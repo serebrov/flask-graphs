@@ -36,22 +36,22 @@ class APITest(unittest.TestCase):
     def test_get_all(self):
         result = self.app.get('/data')
         result = json.loads(result.data)
-        self.assertEquals(self.expected_data, result)
+        self.assertEquals(self.expected_data.values(), result['data'])
 
     def test_find_by_end(self):
         result = self.app.get('/data?end=150')
         result = json.loads(result.data)
-        self.assertEquals({'Nick|100': self.player1}, result)
+        self.assertEquals([self.player1], result['data'])
 
     def test_find_by_start(self):
         result = self.app.get('/data?start=150')
         result = json.loads(result.data)
-        self.assertEquals({'Ken|200': self.player2}, result)
+        self.assertEquals([self.player2], result['data'])
 
     def test_find_by_start_end(self):
         result = self.app.get('/data?start=150&end=250')
         result = json.loads(result.data)
-        self.assertEquals({'Ken|200': self.player2}, result)
+        self.assertEquals([self.player2], result['data'])
 
 
 if __name__ == "__main__":

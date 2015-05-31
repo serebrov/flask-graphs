@@ -42,23 +42,23 @@ class DBTest(unittest.TestCase):
     def test_find_all(self):
         self.start = self.end = None
         result = database.find_if(self.search_fn)
-        self.assertEquals(self.expected_data, result)
+        self.assertEquals(self.expected_data.values(), result)
 
     def test_find_by_end(self):
         self.start = None
         self.end = 150
         result = database.find_if(self.search_fn)
-        self.assertEquals({'Nick|100': self.player1}, result)
+        self.assertEquals([self.player1], result)
 
     def test_find_by_start(self):
         self.start = 150
         self.end = None
         result = database.find_if(self.search_fn)
-        self.assertEquals({'Ken|200': self.player2}, result)
+        self.assertEquals([self.player2], result)
 
     def test_query(self):
         result = database.query(player='Nick')
-        self.assertEquals({'Nick|100': self.player1}, result)
+        self.assertEquals([self.player1], result)
 
     def test_post(self):
         database.reset()

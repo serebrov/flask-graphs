@@ -54,7 +54,7 @@ def get_data():
             (not start or (start and item['ts'] >= int(start))) and
             (not end or (end and item['ts'] <= int(end)))
     )
-    return jsonify(result)
+    return jsonify({'data': result})
 
 
 if __name__ == '__main__':

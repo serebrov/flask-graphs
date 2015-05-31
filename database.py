@@ -26,21 +26,21 @@ def delete(item):
 
 def find_if(if_fn):
     global data
-    result = {}
+    result = []
     for item_hash in data:
         item = data[item_hash]
         if if_fn(item):
-            result[item_hash] = item
+            result.append(item)
     return result
 
 
 def query(**kwargs):
     global data
-    result = {}
+    result = []
     for item_hash in data:
         item = data[item_hash]
         if matches(item, **kwargs):
-            result[item_hash] = item
+            result.append(item)
     return result
 
 
