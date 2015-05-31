@@ -49,4 +49,4 @@ If you hover a heatmap cell the tooltip will show X,Y and count of visits.
 
 The frontend page looks like this:
 
-![screenshot](image/screen.png)
+![screenshot](static/image/screen.png)
