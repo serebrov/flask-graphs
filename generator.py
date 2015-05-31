@@ -21,8 +21,8 @@ def generate(local=False):
             'player': random.choice(players),
             'floor': random.choice(floors),
             'position': {
-                'x': random.randint(0, 100),
-                'y': random.randint(0, 300)
+                'x': random.randint(0, 17),
+                'y': random.randint(0, 10)
             },
             'ts': random.randint(ts_2015_01_01, ts_now)
         }

@@ -71,6 +71,32 @@ def get_data_count():
     return jsonify({'data': result})
 
 
+@app.route("/data/heatmap", methods=["GET"])
+@print_exceptions
+def get_data_heatmap():
+    #
+    # {
+    #   floor1: [ {'x':10, 'y':20, 'count':5}, ... ]
+    #   ...
+    # }
+    data = database.find_if(lambda item: True)
+    result = defaultdict(dict)
+    for item in data:
+        heat_hash = str(item['position']['x']) + '|' + str(item['position']['y'])
+        if heat_hash in result[item['floor']]:
+            result[item['floor']][heat_hash]['count'] += 1
+        else:
+            result[item['floor']][heat_hash] = {
+                'x': item['position']['x'],
+                'y': item['position']['y'],
+                'count': 1
+            }
+    final_result = {}
+    for floor in result:
+        final_result[floor] = result[floor].values()
+    return jsonify({'data': final_result})
+
+
 if __name__ == '__main__':
     generator.generate(local=True)
     app.run()
