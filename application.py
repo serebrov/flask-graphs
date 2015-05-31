@@ -41,7 +41,7 @@ def post_data():
     data = json.loads(request.data)
     for item in data:
         database.put(item)
-    return jsonify({'result': 'OK'})
+    return jsonify({'result': 'OK', 'len': len(data)})
 
 
 @app.route("/data", methods=["GET"])
